@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moms Night Out</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: elegant and warm; an engraved evening invitation among friends.
+   IDEA: a letterpress holiday card with a champagne-foil border.
+   PICTURE: fine gold line art of a vintage bus beneath a swag of glowing lights, quiet houses beyond.
+   COLOUR and TYPE: deep evergreen, ivory, champagne gold; Cormorant Garamond with Jost.
+   LAYOUT: one framed card centred on an evergreen field; picture, details, plan, cost, RSVP, guest list. */
+:root{color-scheme:dark;--bg:#0c1f19;--card:#122a22;--ink:#f3ede1;--soft:#b9c3b8;--gold:#cfb27a;--goldl:#e7d3a6;--line:rgba(207,178,122,.28)}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16.5px/1.65 Jost,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:720px;margin:0 auto;padding:clamp(16px,4vw,48px) max(4vw,12px) 64px}
+.card{background:var(--card);border:1px solid var(--line);outline:1px solid var(--line);outline-offset:-10px;padding:10px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.fig{position:relative;aspect-ratio:2/1}
+.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.head{padding:8px clamp(20px,6vw,56px) 0;text-align:center}
+.kick{color:var(--gold);font:500 14px/1 Jost,sans-serif;letter-spacing:.04em;margin:0 0 14px}
+h1{font:500 clamp(38px,7vw,54px)/1.05 'Cormorant Garamond',serif;margin:0;text-wrap:balance}
+h1 em{font-style:italic;color:var(--goldl)}
+.sub{color:var(--soft);margin:16px auto 0;max-width:32em}
+.orn{display:block;width:120px;height:14px;margin:26px auto}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 clamp(12px,4vw,40px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div{padding:18px 10px;text-align:center}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{display:block;font:600 23px/1.2 'Cormorant Garamond',serif;color:var(--goldl)}
+.facts span{font-size:14px;color:var(--soft)}
+section{padding:36px clamp(20px,6vw,56px) 0}
+h2{font:500 30px/1.1 'Cormorant Garamond',serif;margin:0 0 16px;text-align:center}
+.attire{text-align:center;color:var(--soft);margin:0 auto;max-width:30em}
+.attire strong{color:var(--ink);font-weight:500}
+ol.sched{list-style:none;margin:0;padding:0}
+.sched li{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.sched li:last-child{border:0}
+.sched time{font:600 20px/1.35 'Cormorant Garamond',serif;color:var(--gold);white-space:nowrap;text-align:right}
+.sched strong{display:block;font-weight:500}
+.sched small{color:var(--soft);font-size:14px}
+.cost p{margin:0 0 14px;color:var(--soft)}
+.cost p strong{color:var(--ink);font-weight:500}
+.tiers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);margin:6px 0 16px}
+.tiers div{text-align:center;padding:12px 4px}
+.tiers div+div{border-left:1px solid var(--line)}
+.tiers b{display:block;font:600 22px/1.2 'Cormorant Garamond',serif;white-space:nowrap}
+.tiers span{font-size:13px;color:var(--soft)}
+.tiers .on{background:rgba(207,178,122,.14)}
+.tiers .on b{color:var(--goldl)}
+.live{border-left:2px solid var(--gold);padding:4px 0 4px 14px;color:var(--ink)!important}
+.fine{font-size:14px}
+form{display:grid;gap:18px}
+label{font-weight:400;font-size:15px;display:grid;gap:6px}
+input,textarea{font:300 16px Jost,sans-serif;padding:12px 14px;border:1px solid var(--line);border-radius:2px;background:#0e231c;color:var(--ink);min-height:46px}
+textarea{min-height:76px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#7f8c83}
+input:focus,textarea:focus,button:focus-visible,.choice input:focus-visible+span{outline:2px solid var(--gold);outline-offset:2px}
+fieldset{border:0;margin:0;padding:0}
+legend{font-size:15px;margin-bottom:6px}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.choice input{position:absolute;opacity:0}
+.choice span{display:flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--line);cursor:pointer;text-align:center;padding:6px;font-size:15px}
+.choice input:checked+span{background:var(--gold);border-color:var(--gold);color:#13241d;font-weight:500}
+button{font:500 16px Jost,sans-serif;letter-spacing:.03em;min-height:52px;border:1px solid var(--gold);background:var(--gold);color:#13241d;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.msg{min-height:1.4em;margin:0;color:var(--goldl);text-align:center}
+.count{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;margin-bottom:10px;color:var(--soft);font-size:15px}
+.count b{font:600 22px 'Cormorant Garamond',serif;color:var(--goldl);margin-right:4px}
+ul.guests{list-style:none;margin:0;padding:0}
+.guests li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.guests .nm{font-weight:500}
+.guests .st{font-size:13px;color:var(--gold);white-space:nowrap}
+.st.no{color:var(--soft)}
+.guests .br{grid-column:1/-1;color:var(--soft);font-size:14px}
+.empty{color:var(--soft);text-align:center;display:block!important}
+.strand{display:block;width:100%;height:auto}
+.sched a,.facts a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.sched a:hover,.facts a:hover{text-decoration-color:var(--gold)}
+.sched .ev{color:var(--gold);font-size:14px;white-space:nowrap}
+footer{padding:36px 20px 30px;text-align:center;color:var(--soft);font:italic 500 19px 'Cormorant Garamond',serif}
+@media(max-width:600px){.facts{grid-template-columns:1fr}.facts div+div{border-left:0;border-top:1px solid var(--line)}.tiers{grid-template-columns:repeat(3,minmax(0,1fr))}.tiers div:nth-child(4),.tiers div:nth-child(5){border-top:1px solid var(--line)}.tiers div:nth-child(4){border-left:0}}
+@media(prefers-reduced-motion:no-preference){.tw{animation:tw 3s ease-in-out infinite}@keyframes tw{50%{opacity:.4}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<article class="card">
+  <svg class="strand" id="strand1" viewBox="0 0 600 34" aria-hidden="true"></svg>
+  <div class="fig" aria-hidden="true">
+    <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet">
+      <defs><radialGradient id="g"><stop offset="0" stop-color="#e7d3a6" stop-opacity=".5"/><stop offset="1" stop-color="#e7d3a6" stop-opacity="0"/></radialGradient></defs>
+      <path d="M20 30 Q160 95 300 40 T580 30" fill="none" stroke="#cfb27a" stroke-width="1" opacity=".7"/>
+      <g id="swag"></g>
+      <g id="houses" fill="none" stroke="#cfb27a" stroke-width="1" opacity=".55"></g>
+      <line x1="40" y1="252" x2="560" y2="252" stroke="#cfb27a" stroke-width="1"/>
+      <g transform="translate(175 150)" fill="none" stroke="#e7d3a6" stroke-width="1.4">
+        <path d="M14 0 H232 Q250 0 250 18 V82 H0 V14 Q0 0 14 0Z"/>
+        <path d="M0 62 H250"/>
+        <g id="wins"></g>
+        <g id="busbulbs" stroke="none"></g>
+        <rect x="208" y="12" width="30" height="40" rx="3"/>
+        <circle cx="56" cy="88" r="14" fill="#122a22"/><circle cx="56" cy="88" r="5"/>
+        <circle cx="196" cy="88" r="14" fill="#122a22"/><circle cx="196" cy="88" r="5"/>
+        <circle cx="246" cy="70" r="12" fill="url(#g)" stroke="none"/>
+        <path d="M70 -14 q10 -14 20 0 q-10 6 -20 0Z M90 -14 q10 -14 20 0 q-10 6 -20 0Z" stroke-width="1.1"/>
+        <path d="M90 -14 v12" stroke-width="1.1"/>
+      </g>
+    </svg>
+  </div>
+
+  <header class="head">
+    <p class="kick">The pleasure of your company is requested</p>
+    <h1>Moms Night Out <em>A Holiday Lights Tour</em></h1>
+    <p class="sub">An evening aboard a private party bus, with time to stroll three of San Diego's most beloved holiday light neighborhoods.</p>
+  </header>
+
+  <svg class="orn" viewBox="0 0 120 14" aria-hidden="true"><path d="M0 7H48M72 7H120" stroke="#cfb27a" stroke-width="1"/><path d="M60 1L66 7L60 13L54 7Z" fill="none" stroke="#cfb27a"/></svg>
+
+  <div class="facts">
+    <div><b>Thursday, December 17</b><span>2026</span></div>
+    <div><b>4:30 to 9:15 in the evening</b><span>Bus departs at 5:30</span></div>
+    <div><b>Whitney's Home</b><span>Carlsbad</span></div>
+  </div>
+
+  <section>
+    <h2>Attire and what to bring</h2>
+    <p class="attire"><strong>Suggested attire is holiday pajamas.</strong> Feel free to bring a snack or drink to share on the bus.</p>
+  </section>
+
+  <section>
+    <h2>The evening</h2>
+    <ol class="sched">
+      <li><time>4:30</time><div><strong>Gathering at Whitney's</strong><small>Arrive between 4:30 and 5:00 for a light snack and a holiday beverage</small></div></li>
+      <li><time>5:10</time><div><strong><a href="https://thesagenews.com/20252/news/deck-the-halls-ammonite-court-sets-up-holiday-light-show">Ammonite Place</a></strong><small>A short stroll to see the lights, then back to Whitney's</small></div></li>
+      <li><time>5:30</time><div><strong>All aboard</strong><small>The bus departs from Whitney's</small></div></li>
+      <li><time>6:00</time><div><strong><a href="https://theresandiego.com/top-neighborhoods-to-view-christmas-lights-in-san-diego/">Fairway Village</a></strong><small>Carmel Mountain Ranch, about 100 glowing homes to stroll</small></div></li>
+      <li><time>6:50</time><div><strong><a href="https://www.nbcsandiego.com/in-your-neighborhood/what-its-like-to-spend-christmas-eve-on-candy-cane-lane/2824721/">Candy Cane Lane</a></strong><small>Poway, three fully lit cul-de-sacs</small></div></li>
+      <li><time>7:40</time><div><strong><a href="https://theatlasheart.com/best-christmas-lights-in-san-diego/">Christmas Card Lane</a></strong><small>Rancho Pe&ntilde;asquitos, giant illuminated holiday cards</small></div></li>
+      <li><time>9:15</time><div><strong>Return to Whitney's</strong></div></li>
+    </ol>
+    <p class="attire" style="margin-top:18px">Stops may change as we finalize the route, and ideas are always welcome. Know a street with spectacular lights? Share it in the note with your RSVP.</p>
+  </section>
+
+  <section class="cost">
+    <h2>Your share of the bus</h2>
+    <p>The private party bus is about <strong>$860 for the evening</strong>, shared evenly among everyone aboard. The bus holds up to 12 guests, and the more of us who join, the lower each share.</p>
+    <div class="tiers" id="tiers"></div>
+    <p class="live" id="live">Estimated share based on 12 guests: about $72 each.</p>
+    <p class="fine">The final amount and payment details will follow once RSVPs close.</p>
+  </section>
+
+  <section id="rsvp">
+    <h2>Kindly reply</h2>
+    <form id="f" novalidate>
+      <label>Your name<input id="nm" autocomplete="name" maxlength="60" required></label>
+      <fieldset>
+        <legend>Will you join us?</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="st" value="yes" checked><span>Joyfully accepts</span></label>
+          <label class="choice"><input type="radio" name="st" value="no"><span>Regretfully declines</span></label>
+        </div>
+      </fieldset>
+      <label>Snack or drink you'll bring<input id="br" maxlength="80" placeholder="Peppermint bark, a bottle of bubbly"></label>
+      <label>A note for Whitney, including any favorite light displays to add (optional)<textarea id="nt" maxlength="200"></textarea></label>
+      <button id="go" type="submit">Send RSVP</button>
+      <p class="msg" id="msg" role="status"></p>
+    </form>
+  </section>
+
+  <section>
+    <h2>Guest list</h2>
+    <div class="count" id="count"></div>
+    <ul class="guests" id="guests"><li class="empty">Loading replies</li></ul>
+  </section>
+
+  <svg class="strand" id="strand2" viewBox="0 0 600 34" aria-hidden="true" style="margin-top:32px"></svg>
+  <footer style="padding-top:12px">We can't wait to celebrate the season with you.</footer>
+</article>
+</div>
+<script>
+{
+const $=s=>document.querySelector(s);
+const ns='http://www.w3.org/2000/svg';
+const add=(g,tag,a)=>{const e=document.createElementNS(ns,tag);for(const k in a)e.setAttribute(k,a[k]);g.appendChild(e);return e};
+const sw=$('#swag');
+for(let i=0;i<=20;i++){const x=20+i*28,t=(x-20)/280,y=x<=300?30+130*t*(1-t)*.5*2-0+0:0;
+  const yy=x<=300?(1-t)*(1-t)*30+2*(1-t)*t*95+t*t*40:(()=>{const u=(x-300)/280;return(1-u)*(1-u)*40+2*(1-u)*u*(-15)+u*u*30})();
+  add(sw,'circle',{cx:x,cy:yy+5,r:7,fill:'url(#g)'});add(sw,'circle',{cx:x,cy:yy+5,r:2.2,fill:'#f2e2b8',class:i%3?'':'tw'})}
+const hs=$('#houses');
+[[52,54,200],[118,40,214],[440,46,210],[500,58,198]].forEach(([x,w,y])=>{add(hs,'path',{d:`M${x} 252V${y}L${x+w/2} ${y-24}L${x+w} ${y}V252`});add(hs,'rect',{x:x+w/2-6,y:y+14,width:12,height:16,fill:'#cfb27a','fill-opacity':.35})});
+const bc=['#f2e2b8','#f2e2b8','#e39a9a','#f2e2b8','#a9d4b6'];
+const q=(a,b,c,t)=>(1-t)*(1-t)*a+2*(1-t)*t*b+t*t*c;
+const bulb=(g,x,y,i,r)=>{add(g,'circle',{cx:x,cy:y,r:r*2.8,fill:'url(#g)'});add(g,'circle',{cx:x,cy:y,r,fill:bc[i%5],class:i%3?'':'tw'})};
+add(sw,'path',{d:'M20 72 Q300 140 580 72',fill:'none',stroke:'#cfb27a','stroke-width':1,opacity:.5});
+for(let i=0;i<=24;i++){const t=i/24;bulb(sw,q(20,300,580,t),q(72,140,72,t)+4,i,2)}
+[[52,54,200],[118,40,214],[440,46,210],[500,58,198]].forEach(([x,w,y],j)=>{for(let k=0;k<=8;k++){const px=x+w*k/8,py=y-24*(1-Math.abs(k-4)/4);bulb(sw,px,py-2,k+j,1.7)}});
+const bb=$('#busbulbs');for(let i=0;i<=13;i++){const x=10+i*18,y=-3+4*Math.sin(i*1.1);bulb(bb,x,y,i,2.3)}
+const strand=el=>{let d='M0 8';for(let i=0;i<10;i++)d+=` Q${i*60+30} 26 ${i*60+60} 8`;add(el,'path',{d,fill:'none',stroke:'#cfb27a','stroke-width':1,opacity:.6});
+  const defs=document.createElementNS(ns,'defs');defs.innerHTML='<radialGradient id="g'+el.id+'"><stop offset="0" stop-color="#e7d3a6" stop-opacity=".55"/><stop offset="1" stop-color="#e7d3a6" stop-opacity="0"/></radialGradient>';el.appendChild(defs);
+  for(let i=0;i<20;i++){const seg=Math.floor(i/2),t=i%2?0.75:0.25,x=seg*60+60*t,y=q(8,26,8,t)+5;add(el,'circle',{cx:x,cy:y,r:8,fill:`url(#g${el.id})`});add(el,'circle',{cx:x,cy:y,r:3,fill:bc[i%5],class:i%3?'':'tw'})}};
+strand($('#strand1'));strand($('#strand2'));
+const wn=$('#wins');for(let i=0;i<5;i++)add(wn,'rect',{x:14+i*38,y:14,width:30,height:30,rx:3,fill:'#cfb27a','fill-opacity':.18});
+
+const TOTAL=860;
+const fmt=n=>'$'+Math.round(n);
+const tiers=[8,9,10,11,12];
+function drawTiers(yes){
+  const near=yes?tiers.reduce((a,b)=>Math.abs(b-yes)<Math.abs(a-yes)?b:a):12;
+  $('#tiers').innerHTML=tiers.map(n=>`<div class="${n===near?'on':''}"><b>${fmt(TOTAL/n)}</b><span>${n} guests</span></div>`).join('');
+  $('#live').textContent=yes>12?`We're at ${yes} replies and the bus holds 12. Whitney will be in touch to confirm spots.`:yes>=2?`With ${yes} guests confirmed so far, each share would be about ${fmt(TOTAL/yes)}.`:'Estimated share based on 12 guests: about $72 each.';
+}
+drawTiers(0);
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FORM='https://docs.google.com/forms/d/e/1FAIpQLSdPkVIYiH6q0ZYhvyZ5ot9-rv8WAIsQ7V8YAhk6_gSNcgB0RA/formResponse';
+const SHEET='https://docs.google.com/spreadsheets/d/e/2PACX-1vRP5iAuOuPTPJ2607QIjuNfr-Duyx0hqRwqacPuPw2dz-SDQd3IIdApzh0KO6zE_xKHEKS1w02AAjjI/pub?gid=1736720498&single=true&output=csv';
+const F={nm:'entry.842476280',st:'entry.1924423714',br:'entry.2090895500',nt:'entry.1450685814'};
+const ST={yes:'Joyfully accepts',no:'Regretfully declines'};
+const label={yes:'Attending',no:'Regrets'};
+let rows=[],pending=[],loaded=false;
+const msg=t=>{$('#msg').textContent=t};
+
+function parseCSV(t){const out=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);out.push(row);row=[];f=''}else f+=c}if(f!==''||row.length){row.push(f);out.push(row)}return out}
+
+function fromSheet(text){
+  const data=parseCSV(text).filter(r=>r.some(x=>x.trim()));if(!data.length)return[];
+  const h=data[0].map(x=>x.toLowerCase());
+  const col=re=>h.findIndex(x=>re.test(x));
+  const cn=col(/name/),cs=col(/join/),cb=col(/snack|bring/),ct=col(/note/);
+  const by=new Map();
+  data.slice(1).forEach(r=>{const nm=(r[cn]||'').trim();if(!nm)return;
+    const st=/declin|regret/i.test(r[cs]||'')?'no':'yes';
+    by.set(nm.toLowerCase(),{nm,st,br:(r[cb]||'').trim(),nt:(r[ct]||'').trim()})});
+  return[...by.values()];
+}
+
+function merged(){const by=new Map();rows.forEach(r=>by.set(r.nm.toLowerCase(),r));pending.forEach(r=>by.set(r.nm.toLowerCase(),r));return[...by.values()]}
+
+function render(){
+  if(!loaded)return;
+  const list=merged(),g=$('#guests');
+  const yes=list.filter(r=>r.st==='yes').length,no=list.length-yes;
+  $('#count').innerHTML=`<span><b>${yes}</b>attending</span><span><b>${no}</b>regrets</span>`;
+  drawTiers(yes);
+  if(!list.length){g.innerHTML='<li class="empty">No replies yet. Be the first.</li>';return}
+  g.innerHTML=list.sort((a,b)=>(a.st===b.st?0:a.st==='yes'?-1:1)||a.nm.localeCompare(b.nm)).map(r=>
+    `<li><span class="nm">${esc(r.nm)}</span><span class="st ${r.st==='no'?'no':''}">${esc(label[r.st])}</span>${r.br?`<span class="br">Bringing ${esc(r.br)}</span>`:''}${r.nt?`<span class="br">${esc(r.nt)}</span>`:''}</li>`).join('');
+}
+
+async function load(){
+  try{const res=await fetch(SHEET+'&t='+Date.now(),{cache:'no-store'});if(!res.ok)throw 0;rows=fromSheet(await res.text());
+    pending=pending.filter(p=>!rows.some(r=>r.nm.toLowerCase()===p.nm.toLowerCase()&&r.st===p.st));loaded=true;render()}
+  catch(_){if(!loaded){loaded=true;$('#guests').innerHTML='<li class="empty">The guest list could not load right now. Please check back soon.</li>'}}
+}
+
+try{const mine=JSON.parse(localStorage.getItem('mno-rsvp')||'null');if(mine){$('#nm').value=mine.nm||'';$('#br').value=mine.br||'';$('#nt').value=mine.nt||'';const r=document.querySelector(`input[name=st][value="${mine.st}"]`);if(r)r.checked=true;$('#go').textContent='Update RSVP'}}catch(_){}
+
+$('#f').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const nm=$('#nm').value.trim();
+  if(!nm){msg('Please add your name.');$('#nm').focus();return}
+  const d={nm,st:document.querySelector('input[name=st]:checked').value,br:$('#br').value.trim(),nt:$('#nt').value.trim()};
+  const body=new URLSearchParams();body.append(F.nm,d.nm);body.append(F.st,ST[d.st]);if(d.br)body.append(F.br,d.br);if(d.nt)body.append(F.nt,d.nt);
+  $('#go').disabled=true;msg('Sending');
+  try{await fetch(FORM,{method:'POST',mode:'no-cors',body});
+    pending=pending.filter(p=>p.nm.toLowerCase()!==nm.toLowerCase());pending.push(d);render();
+    try{localStorage.setItem('mno-rsvp',JSON.stringify(d))}catch(_){}
+    msg(d.st==='no'?'Thank you for letting us know. You will be missed.':'Thank you. We look forward to seeing you.');$('#go').textContent='Update RSVP'}
+  catch(_){msg('Your reply did not send. Please try again, or text Whitney.')}
+  finally{$('#go').disabled=false}
+});
+
+load();setInterval(load,60000);
+}
+</script>
+</body>
+</html>
