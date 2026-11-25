@@ -230,6 +230,8 @@ const F={nm:'entry.842476280',st:'entry.1924423714',br:'entry.2090895500',nt:'en
 const ST={yes:'Joyfully accepts',no:'Regretfully declines'};
 const label={yes:'Attending',no:'Regrets'};
 let rows=[],pending=[],loaded=false;
+try{pending=JSON.parse(localStorage.getItem('mno-pending')||'[]')}catch(_){pending=[]}
+const savePending=()=>{try{localStorage.setItem('mno-pending',JSON.stringify(pending))}catch(_){}};
 const msg=t=>{$('#msg').textContent=t};
 
 function parseCSV(t){const out=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);out.push(row);row=[];f=''}else f+=c}if(f!==''||row.length){row.push(f);out.push(row)}return out}
@@ -261,7 +263,7 @@ function render(){
 
 async function load(){
   try{const res=await fetch(SHEET+'&t='+Date.now(),{cache:'no-store'});if(!res.ok)throw 0;rows=fromSheet(await res.text());
-    pending=pending.filter(p=>!rows.some(r=>r.nm.toLowerCase()===p.nm.toLowerCase()&&r.st===p.st));loaded=true;render()}
+    pending=pending.filter(p=>!rows.some(r=>r.nm.toLowerCase()===p.nm.toLowerCase()&&r.st===p.st));savePending();loaded=true;render()}
   catch(_){if(!loaded){loaded=true;$('#guests').innerHTML='<li class="empty">The guest list could not load right now. Please check back soon.</li>'}}
 }
 
@@ -275,9 +277,9 @@ $('#f').addEventListener('submit',async e=>{
   const body=new URLSearchParams();body.append(F.nm,d.nm);body.append(F.st,ST[d.st]);if(d.br)body.append(F.br,d.br);if(d.nt)body.append(F.nt,d.nt);
   $('#go').disabled=true;msg('Sending');
   try{await fetch(FORM,{method:'POST',mode:'no-cors',body});
-    pending=pending.filter(p=>p.nm.toLowerCase()!==nm.toLowerCase());pending.push(d);render();
+    pending=pending.filter(p=>p.nm.toLowerCase()!==nm.toLowerCase());pending.push(d);savePending();render();
     try{localStorage.setItem('mno-rsvp',JSON.stringify(d))}catch(_){}
-    msg(d.st==='no'?'Thank you for letting us know. You will be missed.':'Thank you. We look forward to seeing you.');$('#go').textContent='Update RSVP'}
+    msg((d.st==='no'?'Thank you for letting us know. You will be missed.':'Thank you. We look forward to seeing you.')+' It may take a few minutes for your reply to appear for everyone.');$('#go').textContent='Update RSVP'}
   catch(_){msg('Your reply did not send. Please try again, or text Whitney.')}
   finally{$('#go').disabled=false}
 });
