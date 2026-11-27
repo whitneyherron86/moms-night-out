@@ -155,7 +155,7 @@ footer{padding:36px 20px 30px;text-align:center;color:var(--soft);font:italic 50
 
   <section class="cost">
     <h2>Your share of the bus</h2>
-    <p>The private party bus is about <strong>$860 for the evening</strong>, shared evenly among everyone aboard. The bus holds up to 12 guests, and the more of us who join, the lower each share.</p>
+    <p>The private party bus is about <strong>$860 for the evening</strong>, shared evenly among everyone aboard. The bus holds up to 14 guests, and the more of us who join, the lower each share.</p>
     <div class="tiers" id="tiers"></div>
     <p class="live" id="live">Estimated share based on 12 guests: about $72 each.</p>
     <p class="fine">The final amount and payment details will follow once RSVPs close.</p>
@@ -215,11 +215,11 @@ const wn=$('#wins');for(let i=0;i<5;i++)add(wn,'rect',{x:14+i*38,y:14,width:30,h
 
 const TOTAL=860;
 const fmt=n=>'$'+Math.round(n);
-const tiers=[8,9,10,11,12];
+const tiers=[8,10,12,13,14];
 function drawTiers(yes){
   const near=yes?tiers.reduce((a,b)=>Math.abs(b-yes)<Math.abs(a-yes)?b:a):12;
   $('#tiers').innerHTML=tiers.map(n=>`<div class="${n===near?'on':''}"><b>${fmt(TOTAL/n)}</b><span>${n} guests</span></div>`).join('');
-  $('#live').textContent=yes>12?`We're at ${yes} replies and the bus holds 12. Whitney will be in touch to confirm spots.`:yes>=2?`With ${yes} guests confirmed so far, each share would be about ${fmt(TOTAL/yes)}.`:'Estimated share based on 12 guests: about $72 each.';
+  $('#live').textContent=yes>14?`We're at ${yes} replies and the bus holds 14. Whitney will be in touch to confirm spots.`:yes>=2?`With ${yes} guests confirmed so far, each share would be about ${fmt(TOTAL/yes)}.`:'Estimated share based on 12 guests: about $72 each.';
 }
 drawTiers(0);
 
